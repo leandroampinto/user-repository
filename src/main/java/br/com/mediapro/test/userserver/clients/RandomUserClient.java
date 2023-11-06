@@ -1,9 +1,7 @@
 package br.com.mediapro.test.userserver.clients;
 
 import java.util.List;
-import java.util.stream.Stream;
 
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +12,7 @@ import br.com.mediapro.test.userserver.models.User;
 
 @Component
 public class RandomUserClient {
-	private static final String URL = "https://randomuser.me/api/?seed=123&results=200";
+	private static final String URL = "https://randomuser.me/api/?seed=1234567890&results=200";
 
 	private RestTemplate restTemplate;
 	
