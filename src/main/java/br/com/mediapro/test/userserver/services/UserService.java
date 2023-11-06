@@ -2,23 +2,21 @@ package br.com.mediapro.test.userserver.services;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import br.com.mediapro.test.userserver.clients.RandomUserClient;
 import br.com.mediapro.test.userserver.clients.DownloadClient;
 import br.com.mediapro.test.userserver.exceptions.UserNotFoundException;
-import br.com.mediapro.test.userserver.models.AgeRange;
-import br.com.mediapro.test.userserver.models.Gender;
 import br.com.mediapro.test.userserver.models.User;
-import br.com.mediapro.test.userserver.models.UserStats;
 
 @Service
 public class UserService {
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private RandomUserClient randomUserClient;
     private DownloadClient downloadClient;
 
@@ -58,6 +56,19 @@ public class UserService {
     }
 
     public Stream<User> searchUsers(String query) {
-        return getUsers().filter(user -> acceptUser(user, query));
+        final int min = 3;
+        final int max = 64;
+        if (min <= query.length() && query.length() <= max) {
+            return getUsers().filter(user -> acceptUser(user, query));
+        }
+        else {
+            logger.warn(
+                "Returning all users, because the query '{}' parameters isn't between {} and {}",
+                query,
+                min,
+                max
+            );
+            return getUsers();
+        }
     }
 }
