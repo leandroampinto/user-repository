@@ -73,6 +73,7 @@ public class UserController {
     )
     @ApiResponses({
         @ApiResponse(responseCode="200",content={@Content(schema=@Schema(implementation=User.class),mediaType="application/json")}),
+        @ApiResponse(responseCode="400",content={@Content(schema=@Schema())}),
         @ApiResponse(responseCode="500",content={@Content(schema=@Schema())})
     })
     @GetMapping("/search")
